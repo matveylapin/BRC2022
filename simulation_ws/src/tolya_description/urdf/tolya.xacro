@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tolya">
+  <xacro:include filename="base.xacro" />
+  <xacro:include filename="wheel.xacro" />
+
+  <xacro:base/>
+  <xacro:wheel parent="base_link" origin_xyz="0.065 0.059 0.03" number="1"/>
+  <xacro:wheel parent="base_link" origin_xyz="-0.065 -0.059 0.03" number="2"/>
+  <xacro:wheel parent="base_link" origin_xyz="0.065 -0.059 0.03" number="3"/>
+  <xacro:wheel parent="base_link" origin_xyz="-0.065 0.059 0.03" number="4"/>
+</robot>
