@@ -1,0 +1,3 @@
+FROM dustynv/ros:humble-ros-base-l4t-r35.1.0 as base
+
+ADD ../firmware /firmware 
