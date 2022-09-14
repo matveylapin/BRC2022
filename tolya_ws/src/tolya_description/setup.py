@@ -6,7 +6,7 @@ package_name = 'tolya_description'
 
 def generate_data_files():
     data_files = []
-    data_dirs = ['urdf', 'meshes']
+    data_dirs = ['urdf']
 
     for dir in data_dirs:
         for file_path in glob(dir + '/**', recursive=True):
@@ -24,7 +24,6 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         (os.path.join('share', package_name), ['package.xml']),
-        (os.path.join('share', package_name, 'urdf'), glob('urdf/*')),
     ] + generate_data_files(),
     install_requires=['setuptools'],
     zip_safe=True,

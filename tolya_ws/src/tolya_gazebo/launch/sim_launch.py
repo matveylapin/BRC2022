@@ -23,6 +23,9 @@ def generate_launch_description():
     swpan_args = '{name: \"tolya\", xml: \"' + robot_desc + '\" }'
     
     return LaunchDescription([
+        # ExecuteProcess(
+        #     cmd=['ros2', 'run', 'tolya_gazebo', 'gazebo_simulation']),
+
         ExecuteProcess(
             cmd=['gazebo', '--verbose', world,
                  '-s', 'libgazebo_ros_factory.so'],
@@ -36,9 +39,5 @@ def generate_launch_description():
         ExecuteProcess(
             cmd=['ros2', 'service', 'call', '/spawn_entity',
                  'gazebo_msgs/SpawnEntity', swpan_args],
-            output='screen'),
-
-        ExecuteProcess(
-            cmd=['ros2', 'run', 'tolya_gazebo', 'gazebo_simulation'],
             output='screen'),
     ])

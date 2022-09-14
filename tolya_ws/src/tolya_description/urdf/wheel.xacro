@@ -1,38 +1,37 @@
 <?xml version='1.0'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:macro name="wheel"  params="origin_xyz number parent">
+    <xacro:macro name="wheel" params="origin_xyz number parent">
         <link name='wheel_link_${number}'>
-        <inertial>
-            <mass value="0.05"/>
-            <origin xyz="0 0 0" rpy=" 0 0 0"/>
-            <inertia
-                ixx="0.1" ixy="0" ixz="0"
-                iyy="0.1" iyz="0"
-                izz="0.1"
-            />
-        </inertial>
+            <inertial>
+                <mass value="0.05"/>
+                <origin xyz="0 0 0" rpy=" 0 0 0"/>
+                <inertia
+                    ixx="0.1" ixy="0" ixz="0"
+                    iyy="0.1" iyz="0"
+                    izz="0.1"
+                />
+            </inertial>
 
-        <collision name='wheel_collision_${number}'>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <cylinder radius="0.03" length="0.03"/>
-            </geometry>
-        </collision>
+            <collision name='wheel_collision_${number}'>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder radius="0.03" length="0.03"/>
+                </geometry>
+            </collision>
 
-        <visual name='wheel_visual_${number}'>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <!-- <mesh filename="$(find tolya_description)/meshes/wheel.stl"/> -->
-                <cylinder radius="0.03" length="0.03"/>
-            </geometry>
-        </visual>
+            <visual name='wheel_visual_${number}'>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <!-- <mesh filename="$(find tolya_description)/meshes/wheel.stl"/> -->
+                    <cylinder radius="0.03" length="0.03"/>
+                </geometry>
+            </visual>
         </link> 
 
-        <joint name="wheel_joint_${number}" type="continuous">
+        <joint name="wheel_joint_${number}" type="fixed">
             <origin rpy="0 ${pi/2} 0" xyz="${origin_xyz}" />
             <parent link="${parent}" />
             <child link="wheel_link_${number}" />
-            <axis xyz="1 1 1" />
         </joint>
-    </xacro:macro >
+    </xacro:macro>
 </robot>
