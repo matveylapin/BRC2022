@@ -2,11 +2,11 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:include filename="sensors/imu.xacro" />
     <xacro:include filename="sensors/camera.xacro" />
-    <!-- <xacro:include filename="sensors/depth_camera.xacro" /> -->
+    <xacro:include filename="sensors/depth_camera.xacro" />
     
     <xacro:macro name="sensors" params="parent">
         <xacro:imu_sensor parent="${parent}"/>
         <xacro:camera_sensor parent="${parent}"/>
-        <!-- <xacro:depth_camera_sensor parent="${parent}"/> -->
+        <xacro:depth_camera_sensor parent="${parent}"/>
     </xacro:macro>
 </robot>
