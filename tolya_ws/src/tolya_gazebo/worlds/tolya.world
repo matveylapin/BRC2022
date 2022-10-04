@@ -608,7 +608,7 @@
         <collision name='brc_cube_collision'>
           <geometry>
             <box>
-              <size>0.1 0.1 0.1</size>
+              <size>0.2 0.2 0.2</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -866,7 +866,7 @@
       </model>
       <model name='brc_cube'>
         <pose>-0.271999 0.708001 0.049991 -2e-06 -0 -0.003016</pose>
-        <scale>1 1 1</scale>
+        <scale>0.5 0.5 0.5</scale>
         <link name='brc_cube_link'>
           <pose>-0.271999 0.708001 0.049991 -2e-06 -0 -0.003016</pose>
           <velocity>0 0 0 0 -0 0</velocity>

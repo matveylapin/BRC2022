@@ -5,76 +5,11 @@
       <author>Blender User</author>
       <authoring_tool>Blender 3.0.0 commit date:2021-12-02, commit time:18:35, hash:f1cca3055776</authoring_tool>
     </contributor>
-    <created>2022-08-28T18:38:08</created>
-    <modified>2022-08-28T18:38:08</modified>
+    <created>2022-09-26T21:38:40</created>
+    <modified>2022-09-26T21:38:40</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
-  <library_cameras>
-    <camera id="Camera-camera" name="Camera">
-      <optics>
-        <technique_common>
-          <perspective>
-            <xfov sid="xfov">39.59775</xfov>
-            <aspect_ratio>1.777778</aspect_ratio>
-            <znear sid="znear">0.1</znear>
-            <zfar sid="zfar">100</zfar>
-          </perspective>
-        </technique_common>
-      </optics>
-      <extra>
-        <technique profile="blender">
-          <shiftx sid="shiftx" type="float">0</shiftx>
-          <shifty sid="shifty" type="float">0</shifty>
-          <dof_distance sid="dof_distance" type="float">10</dof_distance>
-        </technique>
-      </extra>
-    </camera>
-  </library_cameras>
-  <library_lights>
-    <light id="Light-light" name="Light">
-      <technique_common>
-        <point>
-          <color sid="color">1000 1000 1000</color>
-          <constant_attenuation>1</constant_attenuation>
-          <linear_attenuation>0</linear_attenuation>
-          <quadratic_attenuation>0.00111109</quadratic_attenuation>
-        </point>
-      </technique_common>
-      <extra>
-        <technique profile="blender">
-          <type sid="type" type="int">0</type>
-          <flag sid="flag" type="int">0</flag>
-          <mode sid="mode" type="int">1</mode>
-          <gamma sid="blender_gamma" type="float">1</gamma>
-          <red sid="red" type="float">1</red>
-          <green sid="green" type="float">1</green>
-          <blue sid="blue" type="float">1</blue>
-          <shadow_r sid="blender_shadow_r" type="float">0</shadow_r>
-          <shadow_g sid="blender_shadow_g" type="float">0</shadow_g>
-          <shadow_b sid="blender_shadow_b" type="float">0</shadow_b>
-          <energy sid="blender_energy" type="float">1000</energy>
-          <dist sid="blender_dist" type="float">29.99998</dist>
-          <spotsize sid="spotsize" type="float">75</spotsize>
-          <spotblend sid="spotblend" type="float">0.15</spotblend>
-          <att1 sid="att1" type="float">0</att1>
-          <att2 sid="att2" type="float">1</att2>
-          <falloff_type sid="falloff_type" type="int">2</falloff_type>
-          <clipsta sid="clipsta" type="float">0.04999995</clipsta>
-          <clipend sid="clipend" type="float">30.002</clipend>
-          <bias sid="bias" type="float">1</bias>
-          <soft sid="soft" type="float">3</soft>
-          <bufsize sid="bufsize" type="int">2880</bufsize>
-          <samp sid="samp" type="int">3</samp>
-          <buffers sid="buffers" type="int">1</buffers>
-          <area_shape sid="area_shape" type="int">1</area_shape>
-          <area_size sid="area_size" type="float">0.1</area_size>
-          <area_sizey sid="area_sizey" type="float">0.1</area_sizey>
-          <area_sizez sid="area_sizez" type="float">1</area_sizez>
-        </technique>
-      </extra>
-    </light>
-  </library_lights>
   <library_effects>
     <effect id="Material-effect">
       <profile_COMMON>
@@ -106,7 +41,7 @@
   </library_effects>
   <library_images>
     <image id="cube_texture_png" name="cube_texture_png">
-      <init_from>cube%20texture.png</init_from>
+      <init_from>cube_texture.png</init_from>
     </image>
   </library_images>
   <library_materials>
@@ -138,7 +73,7 @@
           </technique_common>
         </source>
         <source id="Cube-mesh-map-0">
-          <float_array id="Cube-mesh-map-0-array" count="72">0.5145798 0.8876454 0.3135025 0.6006558 0.5151429 0.6008082 0.3135025 0.6006558 0.1117814 0.3143849 0.3134045 0.313947 0.9190087 0.5998898 0.7175926 0.3144564 0.9186921 0.3140445 0.5152522 0.3133294 0.3133919 0.02646696 0.5150502 0.02658134 0.5151429 0.6008082 0.3134045 0.313947 0.5152522 0.3133294 0.7177165 0.6000111 0.5152522 0.3133294 0.7175926 0.3144564 0.5145798 0.8876454 0.3135172 0.8874126 0.3135025 0.6006558 0.3135025 0.6006558 0.1120777 0.6000618 0.1117814 0.3143849 0.9190087 0.5998898 0.7177165 0.6000111 0.7175926 0.3144564 0.5152522 0.3133294 0.3134045 0.313947 0.3133919 0.02646696 0.5151429 0.6008082 0.3135025 0.6006558 0.3134045 0.313947 0.7177165 0.6000111 0.5151429 0.6008082 0.5152522 0.3133294</float_array>
+          <float_array id="Cube-mesh-map-0-array" count="72">0.5000804 0.9990733 0.2508506 0.6663732 0.5001974 0.6658354 0.2508506 0.6663732 4.36588e-4 0.3335916 0.2504471 0.333459 0.9992071 0.6660102 0.7496595 0.3334102 0.9984806 0.3334196 0.5002428 0.3334195 0.2503616 5.56366e-4 0.5000647 3.88765e-4 0.5001974 0.6658354 0.2504471 0.333459 0.5002428 0.3334195 0.7496315 0.6664828 0.5002428 0.3334195 0.7496595 0.3334102 0.5000804 0.9990733 0.2505972 0.9999558 0.2508506 0.6663732 0.2508506 0.6663732 4.06824e-4 0.6666526 4.36588e-4 0.3335916 0.9992071 0.6660102 0.7496315 0.6664828 0.7496595 0.3334102 0.5002428 0.3334195 0.2504471 0.333459 0.2503616 5.56366e-4 0.5001974 0.6658354 0.2508506 0.6663732 0.2504471 0.333459 0.7496315 0.6664828 0.5001974 0.6658354 0.5002428 0.3334195</float_array>
           <technique_common>
             <accessor source="#Cube-mesh-map-0-array" count="36" stride="2">
               <param name="S" type="float"/>
@@ -169,7 +104,7 @@
         <instance_light url="#Light-light"/>
       </node>
       <node id="Cube" name="Cube" type="NODE">
-        <matrix sid="transform">0.05 0 0 0 0 0.05 0 0 0 0 0.05 0 0 0 0 1</matrix>
+        <matrix sid="transform">0.1 0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 1</matrix>
         <instance_geometry url="#Cube-mesh" name="Cube">
           <bind_material>
             <technique_common>

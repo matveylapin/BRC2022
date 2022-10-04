@@ -34,7 +34,6 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'gazebo_simulation = tolya_gazebo.gazebo_simulation:main'
         ],
     },
 )
