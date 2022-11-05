@@ -1,6 +1,6 @@
-ARG from
+ARG base_img
 
-FROM ${from}
+FROM ${base_img}
 
 # Install useful packages
 
@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 
 # Create non-root user
 
-ARG USERNAME=robot
+ARG USERNAME=tolya
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
@@ -36,33 +36,44 @@ RUN groupadd --gid $USER_GID $USERNAME \
 RUN apt-get install -y \
     ros-galactic-navigation2 \
     ros-galactic-nav2-bringup \
-    ros-galactic-nav2-simple-commander
+    ros-galactic-turtlebot3*
 
 # Install additional ROS packages
 
-# RUN apt-get install -y \
-#     ros-galactic-pointcloud-to-laserscan
+RUN apt-get install -y \
+    ros-galactic-pointcloud-to-laserscan
+
+# opencv-python
 
 RUN apt-get install -y \
     pip
 
-RUN python3 -m pip \
-    install opencv-contrib-python \
-    xacro
+RUN python3 -m pip install opencv-contrib-python
+
+RUN apt install -y tmux
+
+RUN usermod -a -G dialout $USERNAME
+
+# SSH server setup
+
+RUN apt-get update && apt-get install -y openssh-server
+
+RUN echo 'tolya:sttb' | chpasswd && \
+    echo "Port 23" >> /etc/ssh/sshd_config && \
+    echo "ForceCommand /bin/bash" >> /etc/ssh/sshd_config
 
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 
 USER $USERNAME
 
-ENV WS=/home/$USERNAME/workspace
+ENV WS=/home/$USERNAME/tolya/workspace
 
 # For vs-code server
 
 RUN mkdir -p /home/$USERNAME/.vscode-server/extensions
 
-RUN mkdir -p /home/$USERNAME/hackathon/simulation/workspace && cd /home/$USERNAME \
-    && ln -s /home/$USERNAME/hackathon/simulation/workspace workspace && sudo ln -s /home/$USERNAME/workspace /workspace
+WORKDIR /home/$USERNAME/tolya
 
-WORKDIR $WS
-
-CMD ["/bin/bash","-c","echo \"source ${WS}/install/setup.bash\"  >> ~/.bashrc && echo \"source /opt/ros/galactic/setup.bash\"  >> ~/.bashrc && /bin/bash"]
+CMD ["echo \"source ${WS}/install/setup.bash\"  >> ~/.bashrc && \
+    sudo service ssh start && \
+    /bin/bash"]
