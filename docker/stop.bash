@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker stop "hsl_2022_kobuki" > /dev/null
+docker stop "tolya_container" > /dev/null

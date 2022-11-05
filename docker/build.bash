@@ -11,6 +11,6 @@ printf "\n BUILDING DOCKER IMAGE: ${IMG_NAME}"
 printf "\n                  FROM: ${BASE_IMG}\n\n"
 
 docker build -t "${IMG_NAME}" \
-             -f $KOB_ROOT/docker/Dockerfile $KOB_ROOT \
+             -f $ROOT_DIR/docker/Dockerfile $ROOT_DIR \
             --network=host \
             --build-arg base_img=${BASE_IMG}
