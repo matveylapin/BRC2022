@@ -12,14 +12,14 @@
                 />
             </inertial>
 
-            <collision name='base_collision'>
+            <collision>
                 <origin xyz="0 0 0.06" rpy="0 0 0"/> 
                 <geometry>
                     <box size="0.257 0.1 0.1"/>
                 </geometry>
             </collision>
 
-            <visual name='base_visual'>
+            <visual>
                 <origin xyz="0 0 0.06" rpy="0 0 0"/> 
                 <!-- <origin xyz="-0.187 0 0" rpy="0 0 ${pi}"/> -->
                 <geometry>
@@ -30,33 +30,10 @@
         </link>
 
         <link name="base_footprint">
-            <visual name="base_footprint_visual">
-                <origin xyz="0 0 0" rpy="0 0 0" />
-                <geometry>
-                    <box size="0.001 0.001 0.001" />
-                </geometry>
-            </visual>
-
-            <inertial>
-                <mass value="0.05"/>
-                <origin xyz="0.0 0 0" rpy=" 0 0 0"/>
-                <inertia
-                    ixx="0" ixy="0" ixz="0"
-                    iyy="0" iyz="0"
-                    izz="0"
-                />
-            </inertial>
-
-            <collision name='base_footprint_collision'>
-                <origin xyz="0 0 0" rpy="0 0 0"/> 
-                <geometry>
-                    <box size="0.001 0.001 0.001" />
-                </geometry>
-            </collision>
         </link>
 
         <joint name="base_link_joint" type="fixed">
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <origin xyz="0 0 0.06" rpy="0 0 0" />
             <parent link="base_footprint"/>
             <child link="base_link" />
         </joint>

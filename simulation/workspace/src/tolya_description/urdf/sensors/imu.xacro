@@ -16,6 +16,7 @@
                     <xyzOffset>0 0 0</xyzOffset>
                     <rpyOffset>0 0 0</rpyOffset>
                     <frameName>imu_link</frameName>
+                    <frameId>base_link</frameId>
                 </plugin>
                 <pose>0 0 0 0 0 0</pose>
             </sensor>

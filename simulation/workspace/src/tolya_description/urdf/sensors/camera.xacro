@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:macro name="camera_sensor" params="parent">
-        <link name="camera_frame">
+        <link name="camera_link">
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
@@ -26,10 +26,28 @@
         <joint name="camera_joint" type="fixed">
             <origin xyz="0.15 0.0 0.1" rpy="0 0 0"/>
             <parent link="${parent}"/>
-            <child link="camera_frame"/>
+            <child link="camera_link"/>
         </joint>
 
-        <gazebo reference="camera_frame">
+        <link name="camera_frame">
+        </link>
+
+        <joint name="camera_frame_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+            <parent link="camera_link"/>
+            <child link="camera_frame"/>
+        </joint>
+<!-- 
+        <link name="cube">
+        </link>
+
+        <joint name="cube_frame_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <parent link="camera_frame"/>
+            <child link="cube"/>
+        </joint> -->
+
+        <gazebo reference="camera_link">
             <sensor type="camera" name="camera">
                 <visualize>true</visualize>
                 <update_rate>30.0</update_rate>

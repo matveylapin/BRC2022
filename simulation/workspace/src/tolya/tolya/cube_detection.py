@@ -1,7 +1,8 @@
+from pickletools import dis
 import rclpy
 from rclpy.node import Node
 
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge
 import cv2 as cv
 from rclpy.qos import qos_profile_sensor_data
@@ -23,11 +24,8 @@ markers = {
     "5": {"size": 0.09, "t": [0.0, 0.0, -0.05], "r": [math.pi, 0.0, -math.pi / 2]}
 }
 
-distortion = np.array(
-    [0.041074563385132476, -0.23317633985075079, 0.002736896865846102, 0.0013594533508533232, 0.24301538197366987])
-camera_matrix = np.array(
-    [[600.0, 0.0, 320.0], [0.0, 600.0, 240.0], [0.0, 0.0, 1.0]])
-
+distortion = None
+camera_matrix = None
 
 def eul2rot(theta):
     R_x = np.array([[1, 0, 0],
@@ -97,15 +95,26 @@ class ImageSubscriber(Node):
         super().__init__('cube_detection_subsciber')
         self.publisher = self.create_publisher(
             Image, '/cube_detection/result', qos_profile_sensor_data)
-        self.subscription = self.create_subscription(
+        self.image_subscription = self.create_subscription(
             Image,
             '/camera/image_raw',
             self.image_callback,
             qos_profile_sensor_data)
+        self.camera_info_subscription = self.create_subscription(
+            CameraInfo,
+            '/camera/camera_info',
+            self.camera_info_callback,
+            qos_profile_sensor_data)
+
         self.br = CvBridge()
-        self.subscription
         self.tf_broadcaster = TransformBroadcaster(self)
         self.iter = 0
+
+    def camera_info_callback(self, msg):
+        global distortion, camera_matrix
+
+        distortion = np.array(msg.d)
+        camera_matrix = np.array(msg.k).reshape(3, 3)
 
     def image_callback(self, msg):
         global markers, camera_matrix, distortion

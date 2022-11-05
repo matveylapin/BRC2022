@@ -1,0 +1,73 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="lidar_sensor" params="parent">
+        <link name="lidar">
+            <visual name='visual'>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <sphere>
+                        <radius>0.02</radius>
+                    </sphere>
+                </geometry>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <sphere>
+                        <radius>0.02</radius>
+                    </sphere>
+                </geometry>
+            </collision>
+
+            <inertial>
+                <mass value="1e-5" />
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+            </inertial>
+        </link>
+
+        <joint name="lidar_joint" type="fixed">
+            <origin xyz="0 0 0.17" rpy="0 0 0" />
+            <parent link="${parent}" />
+            <child link="lidar" />
+        </joint>
+
+        <gazebo reference="lidar">
+            <sensor name="lidar_sensor" type="ray">
+                <always_on>true</always_on>
+                <update_rate>10.0</update_rate>
+                <visualize>true</visualize>
+                <ray>
+                    <scan>
+                        <horizontal>
+                            <samples>500</samples>
+                            <resolution>1.0</resolution>
+                            <min_angle>0.000000</min_angle>
+                            <max_angle>6.280000</max_angle>
+                        </horizontal>
+                    </scan>
+                    <range>
+                        <min>0.05</min>
+                        <max>3.0</max>
+                    </range>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.01</stddev>
+                    </noise>
+                </ray>
+
+                <plugin name="lidar_plugin" filename="libgazebo_ros_ray_sensor.so">
+                    <ros>
+                        <remapping>~/out:=scan</remapping>
+                    </ros>
+
+                    <frame_name>lidar</frame_name>
+                    <output_type>sensor_msgs/LaserScan</output_type>
+                </plugin>
+
+            </sensor>
+        </gazebo>
+    </xacro:macro>
+</robot>

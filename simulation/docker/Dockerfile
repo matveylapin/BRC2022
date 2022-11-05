@@ -33,18 +33,15 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 # Install navigation ROS packages
 
-# RUN apt-get install -y \
-#     ros-galactic-navigation2 \
-#     ros-galactic-nav2-bringup \
-#     ros-galactic-nav2-simple-commander \
-#     ros-galactic-turtlebot3*
+RUN apt-get install -y \
+    ros-galactic-navigation2 \
+    ros-galactic-nav2-bringup \
+    ros-galactic-nav2-simple-commander
 
 # Install additional ROS packages
 
 # RUN apt-get install -y \
 #     ros-galactic-pointcloud-to-laserscan
-
-# For qr code detection
 
 RUN apt-get install -y \
     pip

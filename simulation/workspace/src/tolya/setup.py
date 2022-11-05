@@ -1,6 +1,20 @@
+import os
+from glob import glob
 from setuptools import setup
 
 package_name = 'tolya'
+
+def generate_data_files():
+    data_files = []
+    data_dirs = ['launch', 'params']
+
+    for dir in data_dirs:
+        for file_path in glob(dir + '/**', recursive=True):
+            file = os.path.split(file_path)
+            if os.path.isfile(file_path):
+                data_files.append((os.path.join('share', package_name, file[0]), [file_path]))
+
+    return data_files
 
 setup(
     name=package_name,
@@ -10,7 +24,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-    ],
+    ] + generate_data_files(),
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='pizda',
@@ -20,7 +34,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'cube_detection = tolya.cube_detection:main'
+            'cube_detection = tolya.cube_detection:main',
+            'movement_controller = tolya.movement_controller:main'
         ],
     },
 )
