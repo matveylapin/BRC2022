@@ -13,11 +13,10 @@ def generate_launch_description():
     robot_file_name = 'tolya.urdf'
 
     pkg_tolya = get_package_share_directory('tolya')
-    pkg_tolya_description = get_package_share_directory('tolya_description')
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
     pkg_brc = get_package_share_directory('brc')
 
-    urdf_file = os.path.join(pkg_tolya_description, 'urdf', robot_file_name)
+    urdf_file = os.path.join(pkg_tolya, 'urdf', robot_file_name)
     world_file = os.path.join(pkg_brc, 'worlds', world_file_name)
 
     assert os.path.exists(

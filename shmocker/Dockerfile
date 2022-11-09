@@ -61,4 +61,4 @@ RUN mkdir -p /home/$USERNAME/BRC2022/BRC2022/workspace && cd /home/$USERNAME \
 
 WORKDIR $WS
 
-CMD ["/bin/bash","-c","echo \"source ${WS}/install/setup.bash\"  >> ~/.bashrc && echo \"source ${WS}/src/setup.bash\"  >> ~/.bashrc && /bin/bash"]
+CMD ["/bin/bash","-c","echo \"source ${WS}/install/setup.bash\"  >> ~/.bashrc && echo \"source /opt/ros/galactic/setup.bash\"  >> ~/.bashrc && /bin/bash"]

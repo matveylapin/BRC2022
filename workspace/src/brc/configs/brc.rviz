@@ -5,7 +5,6 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /TF1/Frames1
       Splitter Ratio: 0.5
     Tree Height: 498
   - Class: rviz_common/Selection
@@ -78,7 +77,7 @@ Visualization Manager:
     - Alpha: 1
       Class: rviz_default_plugins/RobotModel
       Collision Enabled: false
-      Description File: /home/robot/hackathon/simulation/workspace/install/tolya_description/share/tolya_description/urdf/tolya.urdf
+      Description File: /home/robot/BRC2022/BRC2022/workspace/install/tolya/share/tolya/urdf/tolya.urdf
       Description Source: File
       Description Topic:
         Depth: 5
@@ -153,8 +152,6 @@ Visualization Manager:
           Value: true
         camera_link:
           Value: true
-        cube:
-          Value: true
         lidar:
           Value: true
         map:
@@ -175,25 +172,23 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        base_footprint:
-          base_link:
-            camera_link:
-              camera_frame:
-                cube:
-                  {}
-            lidar:
-              {}
-            wheel_link_1:
-              {}
-            wheel_link_2:
-              {}
-            wheel_link_3:
-              {}
-            wheel_link_4:
-              {}
         map:
           odom:
-            {}
+            base_footprint:
+              base_link:
+                camera_link:
+                  camera_frame:
+                    {}
+                lidar:
+                  {}
+                wheel_link_1:
+                  {}
+                wheel_link_2:
+                  {}
+                wheel_link_3:
+                  {}
+                wheel_link_4:
+                  {}
       Update Interval: 0
       Value: true
     - Alpha: 0.699999988079071
@@ -201,7 +196,7 @@ Visualization Manager:
       Color Scheme: map
       Draw Behind: false
       Enabled: true
-      Name: Map
+      Name: Global costmap
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -215,6 +210,27 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /map_updates
+      Use Timestamp: false
+      Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Local costmap
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /local_costmap/costmap
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /local_costmap/costmap_updates
       Use Timestamp: false
       Value: true
   Enabled: true
@@ -263,25 +279,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 4.439493179321289
+      Distance: 4.172460079193115
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.1771591305732727
-        Y: 0.24444963037967682
-        Z: -0.13447220623493195
+        X: -0.2856047451496124
+        Y: 0.23087868094444275
+        Z: -0.027586083859205246
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.70539790391922
+      Pitch: 0.6153979301452637
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.7053948044776917
+      Yaw: 0.6953951716423035
     Saved: ~
 Window Geometry:
   Camera image:

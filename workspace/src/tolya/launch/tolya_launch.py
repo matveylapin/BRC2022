@@ -12,9 +12,8 @@ def generate_launch_description():
     robot_file_name = 'tolya.urdf'
 
     pkg_tolya = get_package_share_directory('tolya')
-    pkg_tolya_description = get_package_share_directory('tolya_description')
 
-    urdf_file = os.path.join(pkg_tolya_description, 'urdf', robot_file_name)
+    urdf_file = os.path.join(pkg_tolya, 'urdf', robot_file_name)
 
     assert os.path.exists(
         urdf_file), "{robot_file_name} doesnt exist in {urdf_file}"
@@ -32,13 +31,13 @@ def generate_launch_description():
         )
     )
 
-    # start_cube_detection_node = Node(
-    #     package='tolya', executable='cube_detection')
+    start_cube_detection_node = Node(
+        package='tolya', executable='cube_detection')
 
 
     ld = LaunchDescription()
     ld.add_action(robot_state_publisher_node)
     ld.add_action(start_bringup)
-    # ld.add_action(start_cube_detection_node)
+    ld.add_action(start_cube_detection_node)
 
     return ld
