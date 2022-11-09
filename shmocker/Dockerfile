@@ -42,7 +42,9 @@ RUN apt-get install -y \
 RUN apt-get install -y \
     pip
 
-RUN python3 -m pip install opencv-contrib-python
+RUN python3 -m pip install \
+    opencv-contrib-python \
+    xacro
 
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 
