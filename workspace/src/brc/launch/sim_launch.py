@@ -1,10 +1,10 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.substitutions import LaunchConfiguration, Command
+from launch.substitutions import LaunchConfiguration
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch_ros.actions import Node
-from launch.conditions import UnlessCondition, IfCondition
+from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 
@@ -24,25 +24,23 @@ def generate_launch_description():
     assert os.path.exists(
         world_file), "{world_file_name} doesnt exist in {world_file}"
 
-    rviz_config_file = LaunchConfiguration('rviz_config_file')
     use_sim_time = LaunchConfiguration('use_sim_time')
-    gui_config = DeclareLaunchArgument(name='gui', default_value='True')
+    rviz_config_file = LaunchConfiguration('rviz_config_file')
+    use_gui = LaunchConfiguration('gui')
 
-    declare_rviz_config_file_cmd = DeclareLaunchArgument(
+    declare_use_sim_time = DeclareLaunchArgument(
+        'use_sim_time', default_value='true')
+
+    declare_rviz_config_file = DeclareLaunchArgument(
         'rviz_config_file',
-        default_value=os.path.join(pkg_brc, 'configs', 'brc.rviz'),
-        description='Full path to the RVIZ config file to use')
+        default_value=os.path.join(pkg_brc, 'configs', 'brc.rviz'))
 
-    declare_use_sim_time_cmd = DeclareLaunchArgument(
-        'use_sim_time',
-        default_value='true',
-        description='Use simulation (Gazebo) clock if true')
+    declare_gui_use = DeclareLaunchArgument('gui', default_value='false')
 
     start_rviz_cmd = Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', rviz_config_file],
-        output='screen')
+        arguments=['-d', rviz_config_file])
 
     start_gz_server_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -54,7 +52,7 @@ def generate_launch_description():
     start_gz_client_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')),
-        condition=IfCondition(LaunchConfiguration('gui'))
+        condition=IfCondition(use_gui)
     )
 
     start_gazebo_ros_spawner_cmd = Node(
@@ -73,27 +71,25 @@ def generate_launch_description():
 
     joint_state_publisher_node = Node(
         package='joint_state_publisher',
-        executable='joint_state_publisher',
-        name='joint_state_publisher',
-        condition=UnlessCondition(LaunchConfiguration('gui'))
+        executable='joint_state_publisher'
     )
-    
+
     tolya_launch_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_tolya, 'launch', 'tolya_launch.py')),
-        condition=IfCondition(LaunchConfiguration('gui'))
+        launch_arguments={'use_sim_time': use_sim_time}.items()
     )
 
     ld = LaunchDescription()
-    ld.add_action(declare_use_sim_time_cmd)
-    ld.add_action(declare_rviz_config_file_cmd)
-    ld.add_action(gui_config)
+    ld.add_action(declare_use_sim_time)
+    ld.add_action(declare_rviz_config_file)
+    ld.add_action(declare_gui_use)
     ld.add_action(start_rviz_cmd)
     ld.add_action(start_gz_server_cmd)
     ld.add_action(start_gz_client_cmd)
     ld.add_action(start_gazebo_ros_spawner_cmd)
     ld.add_action(joint_state_publisher_node)
-    
+
     ld.add_action(tolya_launch_cmd)
 
     return ld

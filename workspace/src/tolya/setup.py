@@ -8,7 +8,7 @@ package_name = 'tolya'
 
 def generate_data_files():
     data_files = []
-    data_dirs = ['launch', 'params', 'urdf']
+    data_dirs = ['launch', 'params', 'urdf', 'maps']
 
     for dir in data_dirs:
         for file_path in glob(dir + '/**', recursive=True):
@@ -50,8 +50,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'cube_detection = tolya.cube_detection:main',
-            'movement_controller = tolya.movement_controller:main'
+            'cube_detection = tolya.cube_detection:main'
         ],
     },
 )

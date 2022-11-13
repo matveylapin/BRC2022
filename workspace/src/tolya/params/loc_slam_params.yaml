@@ -1,0 +1,15 @@
+slam_toolbox:
+  ros__parameters:
+    max_laser_range: 3.0
+    # link_scan_maximum_distance: 3.0
+    # loop_search_maximum_distance: 6.0
+    minimum_travel_distance: 0.0
+    minimum_travel_heading: 0.0
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_link
+    scan_topic: /scan
+    mode: localization
+    map_file_name: /workspace/src/tolya/maps/brc_map
+    map_start_pose: [0.0, 0.0, 1.57]
+    resolution: 0.01

@@ -160,33 +160,35 @@ class ImageSubscriber(Node):
                     avg_rm += point[1]
                 avg_c += 1
 
-            pose = [avg_t / avg_c, avg_rm / avg_c]
-
             if avg_c > 0:
-                cv.drawFrameAxes(frame, camera_matrix,
-                                 distortion, pose[1], pose[0], 0.1)
+                pose = [avg_t / avg_c, avg_rm / avg_c]
 
-            # ну и тут надо расчехлить tf2 (мы в camera_color_optical_frame)
-            t = TransformStamped()
+                if avg_c > 0:
+                    cv.drawFrameAxes(frame, camera_matrix,
+                                    distortion, pose[1], pose[0], 0.1)
 
-            t.header.stamp = self.get_clock().now().to_msg()
-            t.header.frame_id = 'camera_frame'
-            t.child_frame_id = 'cube'
+                # ну и тут надо расчехлить tf2 (мы в camera_color_optical_frame)
+                t = TransformStamped()
 
-            # для реального робота
-            t.transform.translation.x = pose[0][0]
-            t.transform.translation.y = pose[0][1]
-            t.transform.translation.z = pose[0][2]
+                t.header.stamp = self.get_clock().now().to_msg()
+                t.header.frame_id = 'camera_frame'
+                t.child_frame_id = 'cube'
 
-            q = rotationMatrixToQuaternion1(pose[1])
-            t.transform.rotation.x = q[0]
-            t.transform.rotation.y = q[1]
-            t.transform.rotation.z = q[2]
-            t.transform.rotation.w = q[3]
+                # для реального робота
+                t.transform.translation.x = pose[0][0]
+                t.transform.translation.y = pose[0][1]
+                t.transform.translation.z = pose[0][2]
 
-            # Send the transformation
-            self.tf_broadcaster.sendTransform(t)
-            self.publisher.publish(self.br.cv2_to_imgmsg(frame))
+                q = rotationMatrixToQuaternion1(pose[1])
+                t.transform.rotation.x = q[0]
+                t.transform.rotation.y = q[1]
+                t.transform.rotation.z = q[2]
+                t.transform.rotation.w = q[3]
+
+                # Send the transformation
+                self.tf_broadcaster.sendTransform(t)
+        
+        self.publisher.publish(self.br.cv2_to_imgmsg(frame))
 
 
 def main(args=None):
