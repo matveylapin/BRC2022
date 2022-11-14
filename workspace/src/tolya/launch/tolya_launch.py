@@ -6,17 +6,26 @@ from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch_ros.actions import PushRosNamespace
+from yaml import safe_load
+from json import dumps
 
 
 def generate_launch_description():
     robot_file_name = 'tolya.urdf'
 
     pkg_tolya = get_package_share_directory('tolya')
+    pkg_brc = get_package_share_directory('brc')
     urdf_file = os.path.join(pkg_tolya, 'urdf', robot_file_name)
+    markers_file = os.path.join(pkg_brc, 'params', 'markers.yaml')
 
     assert os.path.exists(
         urdf_file), "{robot_file_name} doesnt exist in {urdf_file}"
+
+    if os.path.exists(markers_file):
+        with open(markers_file, 'r') as f:
+            markers = dumps(safe_load(f.read()))
+    else:
+        markers = []
 
     namespace = LaunchConfiguration('namespace')
     use_sim_time = LaunchConfiguration('use_sim_time')
@@ -49,8 +58,8 @@ def generate_launch_description():
             'use_slam': use_slam}.items()
     )
 
-    start_cube_detection_node = Node(
-        package='tolya', executable='cube_detection')
+    start_cv_node = Node(
+        package='tolya', executable='cv_node', parameters=[{'markers': markers}])
 
     ld = LaunchDescription()
     ld.add_action(declare_namespace)
@@ -58,6 +67,6 @@ def generate_launch_description():
     ld.add_action(declare_nav2_params_file)
     ld.add_action(start_robot_state_publisher_node)
     ld.add_action(start_nav2_stack)
-    ld.add_action(start_cube_detection_node)
+    ld.add_action(start_cv_node)
 
     return ld

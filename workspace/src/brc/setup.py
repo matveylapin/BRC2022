@@ -6,7 +6,7 @@ package_name = 'brc'
 
 def generate_data_files():
     data_files = []
-    data_dirs = ['launch', 'worlds', 'models', 'configs']
+    data_dirs = ['launch', 'worlds', 'models', 'configs', 'maps', 'params']
 
     for dir in data_dirs:
         for file_path in glob(dir + '/**', recursive=True):

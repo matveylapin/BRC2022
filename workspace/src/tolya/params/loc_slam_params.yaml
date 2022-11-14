@@ -9,7 +9,8 @@ slam_toolbox:
     map_frame: map
     base_frame: base_link
     scan_topic: /scan
-    mode: localization
-    map_file_name: /workspace/src/tolya/maps/brc_map
+    mode: localization # чет нихуя не работает кстати
+    map_update_interval: -1.0
+    map_file_name: /workspace/src/brc/maps/brc_map
     map_start_pose: [0.0, 0.0, 1.57]
     resolution: 0.01
