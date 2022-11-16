@@ -53,7 +53,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'cv_node = tolya.cv_node:main'
+            'cv_node = tolya.cv_node:main',
+            'yandex_maps = tolya.yandex_maps:main'
         ],
     },
 )

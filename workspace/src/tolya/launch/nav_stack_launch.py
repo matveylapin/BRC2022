@@ -5,6 +5,7 @@ from launch.substitutions import LaunchConfiguration
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.conditions import IfCondition, UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_ros.actions import Node
 
 
 def generate_launch_description():
@@ -48,13 +49,16 @@ def generate_launch_description():
             'params_file': params_file}.items(),
         condition=UnlessCondition(use_slam))
 
-    start_navigation = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(os.path.join(
-            pkg_launch_dir, 'navigation_launch.py')),
-        launch_arguments={'namespace': namespace,
-                          'use_sim_time': use_sim_time,
-                          'autostart': autostart,
-                          'params_file': params_file}.items())
+    # start_navigation = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(os.path.join(
+    #         pkg_launch_dir, 'navigation_launch.py')),
+    #     launch_arguments={'namespace': namespace,
+    #                       'use_sim_time': use_sim_time,
+    #                       'autostart': autostart,
+    #                       'params_file': params_file}.items())
+
+    start_navigation = Node(
+        package='tolya', executable='yandex_maps')
 
     ld = LaunchDescription()
     ld.add_action(declare_autostart)
