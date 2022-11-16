@@ -1,14 +1,13 @@
 import os
 from glob import glob
 from setuptools import setup
-import xacro
 
-package_name = 'tolya'
+package_name = 'yandex_maps'
 
 
 def generate_data_files():
     data_files = []
-    data_dirs = ['launch', 'params', 'urdf']
+    data_dirs = ['launch']
 
     for dir in data_dirs:
         for file_path in glob(dir + '/**', recursive=True):
@@ -19,21 +18,6 @@ def generate_data_files():
 
     return data_files
 
-
-def build_urdf():
-    robot_file_name = 'tolya.xacro'
-
-    xacro_file = os.path.join('urdf', robot_file_name)
-    assert os.path.exists(
-        xacro_file), "{robot_file_name} doesnt exist in {xacro_file}"
-
-    robot_description_config = xacro.process_file(xacro_file)
-
-    with open(os.path.join('urdf', 'tolya.urdf'), 'w') as f:
-        f.write(robot_description_config.toxml())
-
-
-build_urdf()
 
 setup(
     name=package_name,
@@ -46,14 +30,16 @@ setup(
     ] + generate_data_files(),
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='pizda',
-    maintainer_email='mighty.igor@yandex.ru',
+    maintainer='robot',
+    maintainer_email='robot@todo.todo',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'cv_node = tolya.cv_node:main'
+            'yandex_maps_controller = yandex_maps.controller:main',
+            'yandex_maps_planner = yandex_maps.planner:main',
+            'yandex_maps_navigator = yandex_maps.navigator:main'
         ],
     },
 )

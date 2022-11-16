@@ -30,6 +30,7 @@ def generate_launch_description():
     namespace = LaunchConfiguration('namespace')
     use_sim_time = LaunchConfiguration('use_sim_time')
     use_slam = LaunchConfiguration('use_slam')
+    params_file = LaunchConfiguration('params_file')
 
     declare_namespace = DeclareLaunchArgument(
         'namespace', default_value='')
@@ -48,13 +49,14 @@ def generate_launch_description():
             ['xacro ', urdf_file])}]
     )
 
-    start_nav2_stack = IncludeLaunchDescription(
+    start_yandex_maps = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_tolya, 'launch', 'nav_stack_launch.py')
+            os.path.join(pkg_tolya, 'launch', 'yandex_maps_launch.py')
         ),
         launch_arguments={
             'namespace': namespace,
             'use_sim_time': use_sim_time,
+            'params_file': params_file,
             'use_slam': use_slam}.items()
     )
 
@@ -66,7 +68,7 @@ def generate_launch_description():
     ld.add_action(declare_use_slam)
     ld.add_action(declare_nav2_params_file)
     ld.add_action(start_robot_state_publisher_node)
-    ld.add_action(start_nav2_stack)
+    ld.add_action(start_yandex_maps)
     ld.add_action(start_cv_node)
 
     return ld
