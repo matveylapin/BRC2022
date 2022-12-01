@@ -156,52 +156,17 @@ class PlannerNode(Node):
             self.get_logger().warn('waiting for map transform')
 
     def find_path(self, mapa, p1, p2):
-        path = []
-        info = mapa.info
+        points_per_pixel = 0.5
+        points = int(points_per_pixel * ((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2) ** 0.5)
 
-        map = np.reshape(mapa.data, (info.height, info.width))
-        grid = deepcopy(map)
-        og = np.zeros([info.height, info.width, 2])
-        og -= 1
-        unvisited = np.array([-1, -1])
+        def intermediates(p1, p2, nb_points=8):
+            x_spacing = (p2[0] - p1[0]) / (nb_points + 1)
+            y_spacing = (p2[1] - p1[1]) / (nb_points + 1)
 
-        points_around = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+            return [[p1[0] + i * x_spacing, p1[1] + i * y_spacing]
+                    for i in range(1, nb_points+1)]
 
-        def is_ok(p):
-            return 0 <= p[0] < info.width and 0 <= p[1] < info.height and grid[p[1], p[0]] == 0
-
-        og[p1[1], p1[0]] = p1
-        c = 0
-
-        while (og[p2[1], p2[0]] == unvisited).all():
-            for y in range(0, info.height):
-                for x in range(0, info.width):
-                    if is_ok([x, y]) and (og[y, x] != unvisited).all():
-                        for p in points_around:
-                            point = np.array([x + p[0], y + p[1]])
-                            if is_ok(point) and (og[point[1], point[0]] == unvisited).all():
-                                og[point[1], point[0]] = np.array([x, y])
-                                c += 1
-                        grid[y, x] = 100
-            if c == 0:
-                return []
-            else:
-                self.get_logger().info(str(c))
-                c = 0
-
-        point = p2
-        path.append(p2)
-
-        while not (point == p1).all():
-            point = og[
-                point[1],
-                point[0]
-            ].astype(int)
-            path.append(point)
-
-        path.reverse()
-
-        return path
+        return list(map(np.array, intermediates(p1, p2, points)))
 
     def map_callback(self, data):
         self.map = deepcopy(data)

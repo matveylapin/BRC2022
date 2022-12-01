@@ -36,7 +36,8 @@ RUN groupadd --gid $USER_GID $USERNAME \
 RUN apt-get install -y \
     ros-galactic-navigation2 \
     ros-galactic-nav2-bringup \
-    ros-galactic-nav2-simple-commander 
+    ros-galactic-nav2-simple-commander \
+    ros-galactic-joint-state-publisher-gui
     
 
 RUN apt-get install -y \

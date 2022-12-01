@@ -13,9 +13,11 @@ from tf2_ros.transform_listener import TransformListener
 from tf2_ros import ExtrapolationException, ConnectivityException, LookupException
 
 MAX_ANGULAR_SPEED = 1.0
-ANGULAR_P = 1.0
+MIN_ANGULAR_SPEED = 0.0
+ANGULAR_P = 1.5
 MAX_LINEAR_SPEED = 0.3
-LINEAR_P = 1.5
+MIN_LINEAR_SPEED = 0.05
+LINEAR_P = 4
 
 
 def euler_from_quaternion(q):
@@ -61,8 +63,8 @@ class ControllerNode(Node):
         self.tf_listener = TransformListener(self.tf_buffer, self)
         self.goal_pose_sub = self.create_subscription(
             PoseStamped,
-            '/goal_pose',
-            # '/path_pose',
+            # '/goal_pose',
+            '/path_pose',
             self.goal_pose_callback,
             qos_profile_sensor_data)
 
@@ -101,7 +103,8 @@ class ControllerNode(Node):
 
         mul = angle_diff / abs(angle_diff)
         movement.angular.z = mul * \
-            min(MAX_ANGULAR_SPEED, abs(angle_diff) * ANGULAR_P)
+            min(MAX_ANGULAR_SPEED, max(
+                MIN_ANGULAR_SPEED, abs(angle_diff) * ANGULAR_P))
 
         a, b = math.cos(self.current_position[2]), math.sin(
             self.current_position[2])
@@ -113,8 +116,10 @@ class ControllerNode(Node):
 
         x_mul = vel[0] / abs(vel[0])
         y_mul = vel[1] / abs(vel[1])
-        movement.linear.x = x_mul * min(MAX_LINEAR_SPEED, abs(vel[0]))
-        movement.linear.y = y_mul * min(MAX_LINEAR_SPEED, abs(vel[1]))
+        movement.linear.x = x_mul * \
+            min(MAX_LINEAR_SPEED, max(MIN_LINEAR_SPEED, abs(vel[0])))
+        movement.linear.y = y_mul * \
+            min(MAX_LINEAR_SPEED, max(MIN_LINEAR_SPEED, abs(vel[1])))
 
         self.publisher.publish(movement)
 

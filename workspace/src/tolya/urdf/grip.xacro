@@ -1,0 +1,52 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="grip/base.xacro" />
+    <xacro:include filename="grip/finger.xacro" />
+
+    <xacro:macro name="grip" params="parent">
+        <xacro:grip_base parent="${parent}" />
+        <xacro:finger offset="0.03" upper="1.57" lower="0" prefix="left" parent="base_grip" />
+        <xacro:finger offset="-0.03" upper="0" lower="-1.57" prefix="right" parent="base_grip" />
+
+
+        <ros2_control name="GazeboSystem" type="system">
+            <hardware>
+                <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+            </hardware>
+            <joint name="base_grip_joint">
+                <command_interface name="position">
+                    <param name="min">0</param>
+                    <param name="max">0.1</param>
+                </command_interface>
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+                <state_interface name="effort" />
+            </joint>
+            <joint name="finger_left_joint">
+                <command_interface name="position">
+                    <param name="min">0</param>
+                    <param name="max">1.57</param>
+                </command_interface>
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+                <state_interface name="effort" />
+            </joint>
+            <joint name="finger_right_joint">
+                <command_interface name="position">
+                    <param name="min">-1.57</param>
+                    <param name="max">0</param>
+                </command_interface>
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+                <state_interface name="effort" />
+            </joint>
+        </ros2_control>
+
+
+        <gazebo>
+            <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+                <parameters>$(find tolya)/params/joint_controller.yaml</parameters>
+            </plugin>
+        </gazebo>
+    </xacro:macro>
+</robot>

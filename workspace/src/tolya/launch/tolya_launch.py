@@ -46,7 +46,7 @@ def generate_launch_description():
         package='robot_state_publisher',
         executable='robot_state_publisher',
         parameters=[{'robot_description': Command(
-            ['xacro ', urdf_file])}]
+            ['xacro ', urdf_file]), 'use_sim_time': use_sim_time}]
     )
 
     start_yandex_maps = IncludeLaunchDescription(

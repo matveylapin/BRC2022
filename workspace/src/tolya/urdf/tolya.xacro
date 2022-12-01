@@ -3,8 +3,10 @@
   <xacro:include filename="base.xacro" />
   <xacro:include filename="wheel.xacro" />
   <xacro:include filename="sensors.xacro" />
+  <xacro:include filename="grip.xacro" />
 
   <xacro:base/>
+  <xacro:grip parent="base_link"/>
   <xacro:wheel parent="base_link" origin_xyz="0.065 0.059 0.03" number="1"/>
   <xacro:wheel parent="base_link" origin_xyz="-0.065 -0.059 0.03" number="2"/>
   <xacro:wheel parent="base_link" origin_xyz="0.065 -0.059 0.03" number="3"/>

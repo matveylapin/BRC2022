@@ -42,6 +42,10 @@ def generate_launch_description():
         executable='rviz2',
         arguments=['-d', rviz_config_file])
 
+    start_joint_gui_cmd = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui')
+
     start_gz_server_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_gazebo_ros, 'launch', 'gzserver.launch.py')
@@ -69,14 +73,14 @@ def generate_launch_description():
         output='screen',
     )
 
-    joint_state_publisher_node = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher'
-    )
+    # joint_state_publisher_node = Node(
+    #     package='joint_state_publisher',
+    #     executable='joint_state_publisher'
+    # )
 
-    tolya_launch_cmd = IncludeLaunchDescription(
+    brc_launch_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_tolya, 'launch', 'tolya_launch.py')),
+            os.path.join(pkg_brc, 'launch', 'brc_launch.py')),
         launch_arguments={'use_sim_time': use_sim_time}.items()
     )
 
@@ -85,11 +89,12 @@ def generate_launch_description():
     ld.add_action(declare_rviz_config_file)
     ld.add_action(declare_gui_use)
     ld.add_action(start_rviz_cmd)
+    ld.add_action(start_joint_gui_cmd)
     ld.add_action(start_gz_server_cmd)
     ld.add_action(start_gz_client_cmd)
     ld.add_action(start_gazebo_ros_spawner_cmd)
-    ld.add_action(joint_state_publisher_node)
+    # ld.add_action(joint_state_publisher_node)
 
-    ld.add_action(tolya_launch_cmd)
+    ld.add_action(brc_launch_cmd)
 
     return ld
